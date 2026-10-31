@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: japa-backend-service
+  namespace: default
+  labels:
+    app: japa-backend
+spec:
+  type: ClusterIP
+  selector:
+    app: japa-backend
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+      protocol: TCP

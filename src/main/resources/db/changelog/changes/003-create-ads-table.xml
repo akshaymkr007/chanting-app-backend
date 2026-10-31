@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="003-create-ads-table" author="japa-platform">
+        <createTable tableName="ad_campaigns">
+            <column name="id" type="VARCHAR(64)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="title" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="subtitle" type="TEXT"/>
+            <column name="cta_text" type="VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cta_url" type="VARCHAR(512)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tag" type="VARCHAR(64)"/>
+            <column name="is_active" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+            <column name="impressions" type="BIGINT" defaultValueNumeric="0"/>
+            <column name="clicks" type="BIGINT" defaultValueNumeric="0"/>
+            <column name="created_at" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+
+        <createTable tableName="ad_global_config">
+            <column name="id" type="VARCHAR(32)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="google_adsense_enabled" type="BOOLEAN" defaultValueBoolean="false"/>
+            <column name="google_adsense_publisher_id" type="VARCHAR(128)"/>
+            <column name="google_adsense_slot_id" type="VARCHAR(64)"/>
+            <column name="custom_promotion_enabled" type="BOOLEAN" defaultValueBoolean="true"/>
+            <column name="updated_at" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+
+        <!-- Initial Seed Configuration -->
+        <insert tableName="ad_global_config">
+            <column name="id" value="default"/>
+            <column name="google_adsense_enabled" valueBoolean="false"/>
+            <column name="google_adsense_publisher_id" value="ca-pub-9876543210123456"/>
+            <column name="google_adsense_slot_id" value="1234567890"/>
+            <column name="custom_promotion_enabled" valueBoolean="true"/>
+        </insert>
+
+        <insert tableName="ad_campaigns">
+            <column name="id" value="promo-1"/>
+            <column name="title" value="Bhagavad Gita As It Is — Free Digital Edition"/>
+            <column name="subtitle" value="Immerse in timeless wisdom. Read all 18 chapters with purports."/>
+            <column name="cta_text" value="Explore Gita"/>
+            <column name="cta_url" value="https://vedabase.io/en/library/bg/"/>
+            <column name="tag" value="Sacred Literature"/>
+            <column name="is_active" valueBoolean="true"/>
+            <column name="impressions" valueNumeric="50"/>
+            <column name="clicks" valueNumeric="12"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
